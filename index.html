@@ -6130,7 +6130,7 @@
         let score = 0;
         let errors = [];
         let isAnswered = false;
-        let userSelect = [];
+        let userSelect =[];
 
         // --- ФУНКЦИИ СОХРАНЕНИЯ ---
         function saveProgress() {
@@ -6163,7 +6163,7 @@
         // --- ОСНОВНЫЕ ФУНКЦИИ ---
         function loadQ() {
             isAnswered = false;
-            userSelect = [];
+            userSelect =[];
             document.getElementById('feedback-container').style.display = 'none';
             document.getElementById('main-btn').innerText = "Перевірити";
             document.getElementById('main-btn').disabled = true;
@@ -6192,8 +6192,6 @@
                 container.appendChild(item);
             }
         }   
-        
-          
 
         function selectOpt(item, key, type) {
             if (isAnswered) return;
@@ -6249,7 +6247,7 @@
             });
             
             document.getElementById('main-btn').innerText = (currentQ < quizData.length - 1) ? "Наступне" : "Завершити";
-            saveProgress(); // Сохраняем состояние после проверки
+            saveProgress(); 
         }
 
         function next() {
@@ -6263,7 +6261,6 @@
         }
 
         function showResult() {
-            // Не удаляем прогресс сразу, чтобы ошибки остались видны при перезагрузке
             document.getElementById('quiz-container').style.display = 'none';
             document.getElementById('result-container').style.display = 'block';
             document.getElementById('score-text').innerHTML = `<h3>Ваш рахунок: ${score} з ${quizData.length}</h3>`;
@@ -6285,6 +6282,7 @@
 
         // Загрузка при старте
         loadProgress();
+        
         // Если дошли до финала, показываем результат, иначе — текущий вопрос
         if (currentQ >= quizData.length && quizData.length > 0) {
             showResult();
@@ -6297,7 +6295,7 @@
             clearProgress();
             location.reload();
         }
-</script>
+    </script>
 </body>
 </html>
 
