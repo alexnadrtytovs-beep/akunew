@@ -28,9 +28,9 @@
             display: flex;
             flex-direction: column;
         }
-        <div style="width: 100%; background-color: #e4e6eb; border-radius: 12px 12px 0 0; height: 8px;">
-    <div id="progress-bar" style="width: 0%; background-color: #28a745; height: 100%; border-radius: 12px 0 0 0; transition: width 0.3s ease;"></div>
-</div>
+        #progress-container { width: 100%; background-color: #e4e6eb; height: 8px; }
+#progress-bar { width: 0%; background-color: #28a745; height: 100%; transition: width 0.3s ease; }
+        
         #quiz-header { padding: 20px; background-color: #007bff; color: white; border-radius: 12px 12px 0 0; }
         #question-counter { font-size: 0.85em; opacity: 0.9; margin-bottom: 4px; }
         #question-text { font-size: 1.15em; font-weight: 600; line-height: 1.4; }
@@ -94,6 +94,9 @@
 <body>
 
     <div id="quiz-container">
+        <div id="progress-container">
+    <div id="progress-bar"></div>
+</div>
         <div id="quiz-header">
             <div id="question-counter"></div>
             <div id="question-text"></div>
@@ -6159,13 +6162,36 @@
 
         // --- ОСНОВНЫЕ ФУНКЦИИ ---
         function loadQ() {
-            // ... твой существующий код ...
-    
-    // Обновление полоски прогресса:
-    const progress = ((currentQ) / quizData.length) * 100;
-    document.getElementById('progress-bar').style.width = progress + '%';
-}
             isAnswered = false;
+            userSelect = [];
+            document.getElementById('feedback-container').style.display = 'none';
+            document.getElementById('main-btn').innerText = "Перевірити";
+            document.getElementById('main-btn').disabled = true;
+            
+            // Обновление полоски прогресса
+            const progress = (currentQ / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+
+            const q = quizData[currentQ];
+            document.getElementById('question-counter').innerText = `Питання ${currentQ + 1} з ${quizData.length}`;
+            document.getElementById('question-text').innerText = q.question;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            const type = q.correct.length > 1 ? 'checkbox' : 'radio';
+            
+            for (let key in q.options) {
+                const item = document.createElement('div');
+                item.className = 'option-item';
+                item.innerHTML = `
+                    <input type="${type}" id="${key}" name="opt">
+                    <label>${key}) ${q.options[key]}</label>
+                `;
+                item.onclick = () => selectOpt(item, key, type);
+                container.appendChild(item);
+            }
+        }
             userSelect = [];
             document.getElementById('feedback-container').style.display = 'none';
             document.getElementById('main-btn').innerText = "Перевірити";
