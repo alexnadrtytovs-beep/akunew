@@ -101,8 +101,16 @@
             background-color: #f8f9fa;
             border-top: 1px solid #e4e6eb;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between; /* ЗМІНЕНО: тепер кнопки будуть по різних краях */
             border-radius: 0 0 12px 12px;
+        }
+
+        /* Стилі для кнопки "Почати знову" під час тесту */
+        .restart-btn {
+            background-color: #6c757d; /* Сірий колір, щоб не відволікати від головної кнопки */
+        }
+        .restart-btn:hover { 
+            background-color: #5a6268; 
         }
 
         .nav-button {
@@ -136,10 +144,15 @@
         <div id="options-container"></div>
         <div id="feedback-container"></div>
         <div id="navigation">
+           <div id="feedback-container"></div>
+        <div id="navigation">
+            <!-- Це нова кнопка зліва -->
+            <button class="nav-button restart-btn" onclick="restartQuiz()">Почати знову</button>
+            
+            <!-- Це ваша стара кнопка справа -->
             <button class="nav-button" id="main-btn" onclick="handleButtonClick()" disabled>Перевірити</button>
         </div>
     </div>
-
     <!-- НОВИЙ БЛОК ПРОГРЕСУ (Під карткою квізу) -->
     <div id="progress-wrapper">
         <div id="progress-text">0%</div>
