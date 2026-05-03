@@ -96,21 +96,24 @@
         .option-item input { width: 20px; height: 20px; margin-right: 15px; flex-shrink: 0; pointer-events: none; }
         .option-item label { flex-grow: 1; cursor: pointer; font-size: 1em; pointer-events: none; }
 
-        #navigation {
+       #navigation {
             padding: 15px 20px;
             background-color: #f8f9fa;
             border-top: 1px solid #e4e6eb;
             display: flex;
-            justify-content: space-between; /* ЗМІНЕНО: тепер кнопки будуть по різних краях */
+            justify-content: space-between; /* САМЕ ЦЕЙ РЯДОК РОЗКИДАЄ КНОПКИ ПО КРАЯХ */
+            align-items: center;
             border-radius: 0 0 12px 12px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        /* Стилі для кнопки "Почати знову" під час тесту */
+        /* Стилі для кнопки "Почати знову" (червона) */
         .restart-btn {
-            background-color: #6c757d; /* Сірий колір, щоб не відволікати від головної кнопки */
+            background-color: #dc3545; /* Червоний колір */
         }
         .restart-btn:hover { 
-            background-color: #5a6268; 
+            background-color: #c82333; /* Темніший червоний при наведенні */
         }
 
         .nav-button {
@@ -147,7 +150,7 @@
            <div id="feedback-container"></div>
         <div id="navigation">
             <!-- Це нова кнопка зліва -->
-            <button class="nav-button restart-btn" onclick="restartQuiz()">Почати знову</button>
+            <button class="nav-button restart-btn" onclick="confirmRestart()">Почати знову</button>
             
             <!-- Це ваша стара кнопка справа -->
             <button class="nav-button" id="main-btn" onclick="handleButtonClick()" disabled>Перевірити</button>
@@ -6353,12 +6356,19 @@
         } else {
             loadQ();
         }
+// Нова функція з підтвердженням
+        function confirmRestart() {
+            if (confirm("ви впевнені? йоу")) {
+                restartQuiz();
+            }
+        }
 
-        // Функция для кнопки "Почати знову"
+        // Функція для кнопки "Почати знову" (вона у вас вже є)
         function restartQuiz() {
             clearProgress();
             location.reload();
         }
+     
     </script>
 </body>
 </html>
