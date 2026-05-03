@@ -13,9 +13,43 @@
             margin: 0;
             padding: 10px;
             display: flex;
+            flex-direction: column; /* ДОДАНО: щоб елементи йшли зверху вниз */
+            gap: 20px; /* ДОДАНО: відстань між карткою і прогресом */
             justify-content: center;
             align-items: center; 
             min-height: 100vh;
+        }
+
+        /* --- НОВІ СТИЛІ ПРОГРЕСУ --- */
+        #progress-wrapper {
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #progress-text {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px; /* Відстань від тексту до смуги */
+        }
+
+        #progress-container { 
+            width: 100%; 
+            background-color: #e4e6eb; 
+            height: 12px; /* Зробили трохи товщою */
+            border-radius: 8px; /* Закруглили кути */
+            border: 2px solid #ccc; /* Темна рамочка, як на ескізі */
+            overflow: hidden; /* Щоб зелена смуга не вилазила за кути */
+        }
+
+        #progress-bar { 
+            width: 0%; 
+            background-color: #28a745; 
+            height: 100%; 
+            transition: width 0.3s ease; 
         }
 
         #quiz-container, #result-container {
@@ -94,9 +128,7 @@
 <body>
 
     <div id="quiz-container">
-        <div id="progress-container">
-    <div id="progress-bar"></div>
-</div>
+       <div id="quiz-container">
         <div id="quiz-header">
             <div id="question-counter"></div>
             <div id="question-text"></div>
@@ -107,6 +139,17 @@
             <button class="nav-button" id="main-btn" onclick="handleButtonClick()" disabled>Перевірити</button>
         </div>
     </div>
+
+    <!-- НОВИЙ БЛОК ПРОГРЕСУ (Під карткою квізу) -->
+    <div id="progress-wrapper">
+        <div id="progress-text">0%</div>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
+    <div id="result-container">
+        <!-- ... тут код результату ... -->
 
     <div id="result-container">
         <h2>Результат</h2>
@@ -6169,8 +6212,14 @@
             document.getElementById('main-btn').disabled = true;
             
             // Обновление полоски прогресса
+            // Оновлення смуги прогресу та тексту над нею
             const progress = (currentQ / quizData.length) * 100;
+            const MathProgress = Math.round(progress); // Округлюємо до цілого числа
+            
             document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').innerText = `${MathProgress}%`; 
+            // Якщо хочете, щоб писало ще й номер питання, можна зробити так:
+            // document.getElementById('progress-text').innerText = `${MathProgress}% (${currentQ} / ${quizData.length})`;
 
             const q = quizData[currentQ];
             document.getElementById('question-counter').innerText = `Питання ${currentQ + 1} з ${quizData.length}`;
@@ -6263,7 +6312,9 @@
         function showResult() {
             document.getElementById('quiz-container').style.display = 'none';
             document.getElementById('result-container').style.display = 'block';
+            document.getElementById('progress-wrapper').style.display = 'none';
             document.getElementById('score-text').innerHTML = `<h3>Ваш рахунок: ${score} з ${quizData.length}</h3>`;
+            
             
             const review = document.getElementById('error-review');
             if (errors.length > 0) {
