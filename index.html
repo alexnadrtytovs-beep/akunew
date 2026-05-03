@@ -6191,32 +6191,8 @@
                 item.onclick = () => selectOpt(item, key, type);
                 container.appendChild(item);
             }
-        }
-            userSelect = [];
-            document.getElementById('feedback-container').style.display = 'none';
-            document.getElementById('main-btn').innerText = "Перевірити";
-            document.getElementById('main-btn').disabled = true;
-            
-            const q = quizData[currentQ];
-            document.getElementById('question-counter').innerText = `Питання ${currentQ + 1} з ${quizData.length}`;
-            document.getElementById('question-text').innerText = q.question;
-            
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            
-            const type = q.correct.length > 1 ? 'checkbox' : 'radio';
-            
-            for (let key in q.options) {
-                const item = document.createElement('div');
-                item.className = 'option-item';
-                item.innerHTML = `
-                    <input type="${type}" id="${key}" name="opt">
-                    <label>${key}) ${q.options[key]}</label>
-                `;
-                item.onclick = () => selectOpt(item, key, type);
-                container.appendChild(item);
-            }
-        }
+        
+          
 
         function selectOpt(item, key, type) {
             if (isAnswered) return;
